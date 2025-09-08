@@ -1,3 +1,5 @@
+using Google.Cloud.Logging.Type;
+using GoogleLogs4DotNet;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPIToCaptureLogsInGCP.Controllers
@@ -6,17 +8,22 @@ namespace WebAPIToCaptureLogsInGCP.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+
+        private readonly GoogleLogger _googleLogger;
+        //private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(GoogleLogger googleLogger)
+        {
+            _googleLogger = googleLogger;
+            _googleLogger.LoggedToGoogleLog(LogSeverity.Info, "WeatherForecastController contstructor initialized");
+        }
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
