@@ -1,0 +1,6 @@
+@WebAPIToCaptureLogsInGCP_HostAddress = http://localhost:5287
+
+GET {{WebAPIToCaptureLogsInGCP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
