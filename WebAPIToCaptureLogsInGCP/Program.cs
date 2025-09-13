@@ -1,4 +1,5 @@
 using GoogleLogs4DotNet;
+using WebAPIToCaptureLogsInGCP.ActionFilter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,9 @@ builder.Services.AddSingleton<GoogleLogger>(sp =>
     var uniqueLogId = builder.Configuration["GoogleCloud:LogId"];
     return new GoogleLogger(projectId, uniqueLogId);
 });
+
+// Register the LogActionFilter for dependency injection
+builder.Services.AddScoped<LogActionFilter>();
 
 
 
