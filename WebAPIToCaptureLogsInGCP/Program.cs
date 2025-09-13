@@ -1,8 +1,5 @@
-using Google.Api;
-using Google.Cloud.Logging.V2;
 using GoogleLogs4DotNet;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using WebAPIToCaptureLogsInGCP.ActionFilter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +14,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<LoggingServiceV2Client>(provider => LoggingServiceV2Client.Create());
-
 
 builder.Services.AddSingleton<GoogleLogger>(sp =>
 {
@@ -26,6 +21,9 @@ builder.Services.AddSingleton<GoogleLogger>(sp =>
     var uniqueLogId = builder.Configuration["GoogleCloud:LogId"];
     return new GoogleLogger(projectId, uniqueLogId);
 });
+
+// Register the LogActionFilter for dependency injection
+builder.Services.AddScoped<LogActionFilter>();
 
 
 
