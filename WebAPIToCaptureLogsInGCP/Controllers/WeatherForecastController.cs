@@ -10,12 +10,12 @@ namespace WebAPIToCaptureLogsInGCP.Controllers
     {
 
         private readonly GoogleLogger _googleLogger;
-        //private readonly ILogger<WeatherForecastController> _logger;
 
+        // Constructor to initialize GoogleLogger
         public WeatherForecastController(GoogleLogger googleLogger)
         {
             _googleLogger = googleLogger;
-            _googleLogger.LoggedToGoogleLog(LogSeverity.Info, "WeatherForecastController contstructor initialized");
+            _googleLogger.LoggedToGoogleLog(LogSeverity.Info, "WeatherForecastController contstructor initialized"); // Capturing Info Log type to GCP Log Explorer, when constructor is initialized.
         }
 
         private static readonly string[] Summaries = new[]
@@ -28,6 +28,7 @@ namespace WebAPIToCaptureLogsInGCP.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            _googleLogger.LoggedToGoogleLog(LogSeverity.Info, "GetWeatherForecast called"); // Capturing Info Log type to GCP Log Explorer, whem method is called.
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
