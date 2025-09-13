@@ -38,7 +38,7 @@ namespace WebAPIToCaptureLogsInGCP.ActionFilter
                         $"IsUserAuthenticated: {isUserIsAuthenticated}";
 
             //if in release mode log to GCP log explorer
-            _googleLogger.LoggedToGoogleLog(Google.Cloud.Logging.Type.LogSeverity.Info, logMessage);
+            _googleLogger.LoggedToGoogleLog(LogSeverity.Info, logMessage);
 
             //Uncomment during local debug mode.
             // You can replace this with _googleLogger.LoggedToGoogleLog(...)
